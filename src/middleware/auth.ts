@@ -1,0 +1,23 @@
+import type { NextFunction, Request, Response } from "express";
+
+
+
+const auth = () => {
+
+    return async(req: Request, res: Response, next: NextFunction) => {
+      const token = req.headers.authorization
+        if (!token) {
+          return res.status(401).json({
+            success: false,
+            message: 'Unauthorized access!!',
+
+        });
+        }
+
+    console.log("Auth middleware executed", req.headers.authorization); 
+        next();
+      }
+    
+};
+
+export default auth;
