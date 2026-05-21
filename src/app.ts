@@ -22,6 +22,7 @@ app.use("/api/auth", authRoute);
 
 // Get endpoint to retrieve all users
 app.get('/api/users', auth(), async (req : Request, res : Response) => {
+  console.log("Retrieving all users", req.user); // Log the user information from the request
   try {
     const result = await pool.query(`SELECT * FROM users`)
     res.status(200).json({
