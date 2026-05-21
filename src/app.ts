@@ -15,7 +15,7 @@ app.use(express.json());
 // Post endpoint to create a new user
 app.use("/api/auth", userRoute);
 app.use("/api/auth", authRoute);
-
+app.use('/api/issues', auth())
 
 
 
