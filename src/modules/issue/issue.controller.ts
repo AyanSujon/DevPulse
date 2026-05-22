@@ -49,7 +49,7 @@ import { issueService } from "./issue.service";
 const createIssue = async (req: Request, res: Response) => {
   try {
     const reporter_id = req.user?.id;
-    // console.log("Reporter ID from request:", reporter_id);
+    console.log("request user form issue controller:", req.user);
     // ✅ check if reporter_id exists
     if (!reporter_id) {
       return res.status(401).json({

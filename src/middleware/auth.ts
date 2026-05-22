@@ -63,7 +63,7 @@ import { pool } from "../db";
 
 
 
-const auth = () => {
+const auth = (...roles: string[]) => {
 
     return async(req: Request, res: Response, next: NextFunction) => {
       try{
@@ -77,7 +77,7 @@ const auth = () => {
         }
 
         const decodedToken = jwt.verify(token, config.jwtSecret) as JwtPayload;
-        // console.log("Decoded token:", decodedToken);
+        console.log("Decoded token:", decodedToken);
         const userData = await pool.query(`SELECT * FROM users WHERE email = $1`, [decodedToken.email]);
         const user = userData.rows[0];
         
@@ -87,13 +87,22 @@ const auth = () => {
             message: 'User not found!!',
         });
         }
-
+        
         if(!user.role) {
           return res.status(403).json({
             success: false,
             message: 'Forbidden access!!',
         });
         }
+        // Check if the user's role is included in the allowed roles
+        if (roles.length && !roles.includes(user.role)) {
+          return res.status(403).json({
+            success: false,
+            message: 'Forbidden access!!',
+        });
+        }
+
+
 
         // added custom 'user' property to the request object "/src/middleware/index.d.ts"
         req.user = decodedToken as JwtPayload;
