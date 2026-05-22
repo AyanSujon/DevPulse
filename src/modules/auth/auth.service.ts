@@ -18,7 +18,7 @@ const loginUserIntoDB = async (payload: IAuth) => {
     // compare the provided password with the stored password -> Done
     const user = userData.rows[0];
     const matchPassword = await bcrypt.compare(password, user.password);
-    console.log("matchPassword", matchPassword);
+    // console.log("matchPassword", matchPassword);
     if (!matchPassword) {
         throw new Error("Invalid Credentials: Incorrect password");
     }

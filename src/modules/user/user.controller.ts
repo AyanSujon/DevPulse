@@ -1,5 +1,4 @@
 import type { Request, Response } from "express";
-import { pool } from "../../db";
 import { userService } from "./user.service";
 
 
@@ -12,7 +11,7 @@ const createUser = async (req : Request, res : Response) => {
       message: "User registered successfully",
       data: result.rows[0]
     })
-    console.log("User registered successfully:", result.rows[0]);
+    // console.log("User registered successfully:", result.rows[0]);
   } catch (error: any) {
     console.error("Error registering user:", error)
     res.status(500).json({ 

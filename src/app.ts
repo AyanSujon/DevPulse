@@ -4,6 +4,7 @@ import { pool } from "./db";
 import { userRoute } from "./modules/user/user.route";
 import { authRoute } from "./modules/auth/auth.route";
 import auth from "./middleware/auth";
+import { issueRoute } from "./modules/issue/issue.route";
 
 const app: Application = express()
 
@@ -15,14 +16,14 @@ app.use(express.json());
 // Post endpoint to create a new user
 app.use("/api/auth", userRoute);
 app.use("/api/auth", authRoute);
-app.use('/api/issues', auth())
+app.use('/api/issues', auth(), issueRoute);
 
 
 
 
 // Get endpoint to retrieve all users
 app.get('/api/users', auth(), async (req : Request, res : Response) => {
-  console.log("Retrieving all users", req.user); // Log the user information from the request
+  // console.log("Retrieving all users", req.user); // Log the user information from the request
   try {
     const result = await pool.query(`SELECT * FROM users`)
     res.status(200).json({
@@ -30,7 +31,7 @@ app.get('/api/users', auth(), async (req : Request, res : Response) => {
       message: "Users retrieved successfully",
       data: result.rows
       })
-    console.log("Users retrieved successfully:", result.rows);
+    // console.log("Users retrieved successfully:", result.rows);
   } catch (error: any) {
 
     console.error("Error retrieving users:", error)
@@ -59,7 +60,7 @@ app.get('/api/users/:id', async (req : Request, res : Response) => {
         data: null
       });
     }
-    console.log("Retrieving user with ID:", result.rows[0]);
+    // console.log("Retrieving user with ID:", result.rows[0]);
     res.status(200).json({
       success: true,
       message: "User retrieved successfully",
