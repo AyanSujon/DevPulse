@@ -30,7 +30,7 @@
 
 
 import { pool } from "../../db"
-import type { IIssue } from "./issue.interface";
+import type { IIssue, IUpdateIssuePayload } from "./issue.interface";
 
 
 
@@ -160,9 +160,61 @@ export const getSingleIssueByIdFromDB = async (issueId: string) => {
 
 
 
+
+
+export const updateIssueByIdFromDB = async (
+  id: string,
+  payload: IUpdateIssuePayload
+) => {
+  const { title, description, type } = payload;
+
+  const result = await pool.query(
+    `UPDATE issues
+     SET
+       title = COALESCE($1, title),
+       description = COALESCE($2, description),
+       type = COALESCE($3, type),
+       updated_at = CURRENT_TIMESTAMP
+     WHERE id = $4
+     RETURNING *`,
+    [title, description, type, id]
+  );
+
+  return result;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const issueService ={
     createIssueIntoDB,
     getAllIssuesFromDB,
     getSingleIssueByIdFromDB,
-
+    updateIssueByIdFromDB,
 }

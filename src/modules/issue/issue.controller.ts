@@ -57,7 +57,7 @@
 
 
 import type { Request, Response } from "express";
-import { getAllIssuesFromDB, issueService } from "./issue.service";
+import { getAllIssuesFromDB, issueService, updateIssueByIdFromDB } from "./issue.service";
 
 // create issues
 const createIssue = async (req: Request, res: Response) => {
@@ -170,6 +170,59 @@ export const getSingleIssueById = async (req: Request, res: Response) => {
 
 
 
+export const updateIssueById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const payload = req.body;
+
+  try {
+    const updatedIssue = await updateIssueByIdFromDB(id as string, payload);
+    console.log("Updated issue:", updatedIssue.rows[0]);
+
+    if (updatedIssue.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Issue not found",
+        data: null,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Issue updated successfully",
+      data: updatedIssue.rows[0],
+    });
+  } catch (error: any) {
+    console.error("Error updating issue:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Internal Server Error",
+      data: null,
+    });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -183,4 +236,5 @@ export const issueController = {
     createIssue,
     getAllIssues,
     getSingleIssueById, 
+    updateIssueById,
 }
