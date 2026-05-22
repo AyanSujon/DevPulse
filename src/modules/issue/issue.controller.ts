@@ -57,7 +57,7 @@
 
 
 import type { Request, Response } from "express";
-import { getAllIssuesFromDB, issueService, updateIssueByIdFromDB } from "./issue.service";
+import { getAllIssuesFromDB, getSingleIssueByIdFromDB, issueService, updateIssueByIdFromDB } from "./issue.service";
 
 // create issues
 const createIssue = async (req: Request, res: Response) => {
@@ -169,22 +169,99 @@ export const getSingleIssueById = async (req: Request, res: Response) => {
 
 
 
+// // Update issue by ID
+// export const updateIssueById = async (req: Request, res: Response) => {
+//   const { id } = req.params;
+//   const payload = req.body;
 
+//   try {
+//     const updatedIssue = await updateIssueByIdFromDB(id as string, payload);
+//     console.log("Updated issue:", updatedIssue.rows[0]);
+
+//     if (updatedIssue.rows.length === 0) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "Issue not found",
+//         data: null,
+//       });
+//     }
+
+//     return res.status(200).json({
+//       success: true,
+//       message: "Issue updated successfully",
+//       data: updatedIssue.rows[0],
+//     });
+//   } catch (error: any) {
+//     console.error("Error updating issue:", error);
+
+//     return res.status(500).json({
+//       success: false,
+//       message: error.message || "Internal Server Error",
+//       data: null,
+//     });
+//   }
+// };
+
+
+
+
+
+
+// Update issue by ID
 export const updateIssueById = async (req: Request, res: Response) => {
   const { id } = req.params;
   const payload = req.body;
+  const user = req.user;
+
+  console.log("request user form issue controller:", user);
 
   try {
-    const updatedIssue = await updateIssueByIdFromDB(id as string, payload);
-    console.log("Updated issue:", updatedIssue.rows[0]);
+    // Get existing issue
+    const existingIssue = await issueService.getSingleIssueByIdFromDB(
+      id as string
+    );
 
-    if (updatedIssue.rows.length === 0) {
-      return res.status(404).json({
+    console.log("Existing issue:", existingIssue);
+
+    // Check if issue exists
+   if (!existingIssue) {
+  return res.status(404).json({
+    success: false,
+    message: "Issue not found",
+    data: null,
+  });
+}
+
+
+    // Access Control Logic
+    if (user?.role === "maintainer") {
+      // Maintainer can update any issue
+    } else if (user?.role === "contributor") {
+      const isOwner = existingIssue.reporter?.id === user?.id;
+      const isOpen = existingIssue.status === "open";
+
+      if (!isOwner || !isOpen) {
+        return res.status(403).json({
+          success: false,
+          message: "Contributors can only update their own open issues",
+          data: null,
+        });
+      }
+    } else {
+      return res.status(403).json({
         success: false,
-        message: "Issue not found",
+        message: "Unauthorized access",
         data: null,
       });
     }
+
+    // Update issue
+    const updatedIssue = await issueService.updateIssueByIdFromDB(
+      id as string,
+      payload
+    );
+
+    // console.log("Updated issue:", updatedIssue.rows[0]);
 
     return res.status(200).json({
       success: true,
@@ -201,31 +278,6 @@ export const updateIssueById = async (req: Request, res: Response) => {
     });
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

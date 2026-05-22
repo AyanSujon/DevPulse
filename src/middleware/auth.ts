@@ -70,6 +70,7 @@ const auth = (...roles: UserRole[]) => {
     return async(req: Request, res: Response, next: NextFunction) => {
       try{
         const token = req.headers.authorization;
+        // console.log("Token from request header: /middleware/auth.ts", token);
 
         if (!token) {
           return res.status(401).json({
@@ -79,7 +80,7 @@ const auth = (...roles: UserRole[]) => {
         }
 
         const decodedToken = jwt.verify(token, config.jwtSecret) as JwtPayload;
-        console.log("Decoded token:", decodedToken);
+        // console.log("Decoded token:", decodedToken);
         const userData = await pool.query(`SELECT * FROM users WHERE email = $1`, [decodedToken.email]);
         const user = userData.rows[0];
         
