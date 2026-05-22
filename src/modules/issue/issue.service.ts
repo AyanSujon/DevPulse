@@ -47,6 +47,8 @@ const createIssueIntoDB = async(payload : IIssue ) =>{
 }
 
 
+// Get all issues with optional filters and sorting: sort, type, status
+// GET /api/issues, GET /api/issues?sort=newest, GET /api/issues?sort=oldest&type=bug, GET /api/issues?status=open&type=feature_request 
 export const getAllIssuesFromDB = async (query: any) => {
   const { sort = "newest", type, status } = query;
 
@@ -117,13 +119,50 @@ export const getAllIssuesFromDB = async (query: any) => {
 
 
 
+// Get single issue by ID
+export const getSingleIssueByIdFromDB = async (issueId: string) => {
+  const resultIssue = await pool.query(
+    `SELECT * FROM issues WHERE id = $1`,
+    [issueId]
+  );
 
+  if (resultIssue.rows.length === 0) {
+    return null;
+  }
 
+  const issue = resultIssue.rows[0];
+
+  const reporterResult = await pool.query(
+    `SELECT id, name, role FROM users WHERE id = $1`,
+    [issue.reporter_id]
+  );
+
+  const reporter = reporterResult.rows[0] || null;
+
+  // Shape final response
+  return {
+    id: issue.id,
+    title: issue.title,
+    description: issue.description,
+    type: issue.type,
+    status: issue.status,
+    reporter: reporter
+      ? {
+          id: reporter.id,
+          name: reporter.name,
+          role: reporter.role,
+        }
+      : null,
+    created_at: issue.created_at,
+    updated_at: issue.updated_at,
+  };
+};
 
 
 
 export const issueService ={
     createIssueIntoDB,
     getAllIssuesFromDB,
+    getSingleIssueByIdFromDB,
 
 }

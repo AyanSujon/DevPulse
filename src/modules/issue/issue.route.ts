@@ -24,8 +24,7 @@ const router = Router()
 // Post endpoint to create a new issue
 router.post('/', auth(userRole.contributor, userRole.maintainer), issueController.createIssue)
 router.get("/" , issueController.getAllIssues);
-
-
+router.get("/:id" , issueController.getSingleIssueById);
 
 
 
