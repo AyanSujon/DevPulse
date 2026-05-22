@@ -60,10 +60,12 @@ import type { NextFunction, Request, Response } from "express";
 import config from "../config";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import { pool } from "../db";
+import type { UserRole } from "../types";
 
 
 
-const auth = (...roles: string[]) => {
+
+const auth = (...roles: UserRole[]) => {
 
     return async(req: Request, res: Response, next: NextFunction) => {
       try{
@@ -87,7 +89,7 @@ const auth = (...roles: string[]) => {
             message: 'User not found!!',
         });
         }
-        
+
         if(!user.role) {
           return res.status(403).json({
             success: false,

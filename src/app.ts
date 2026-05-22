@@ -5,6 +5,7 @@ import { userRoute } from "./modules/user/user.route";
 import { authRoute } from "./modules/auth/auth.route";
 import auth from "./middleware/auth";
 import { issueRoute } from "./modules/issue/issue.route";
+import { userRole } from "./types";
 
 const app: Application = express()
 
@@ -16,13 +17,13 @@ app.use(express.json());
 // Post endpoint to create a new user
 app.use("/api/auth", userRoute);
 app.use("/api/auth", authRoute);
-app.use('/api/issues', auth("contributor", "maintainer"), issueRoute);
+app.use('/api/issues', auth(userRole.contributor, userRole.maintainer), issueRoute);
 
 
 
 
 // Get endpoint to retrieve all users
-app.get('/api/users', auth(), async (req : Request, res : Response) => {
+app.get('/api/users', auth(userRole.contributor, userRole.maintainer), async (req : Request, res : Response) => {
   // console.log("Retrieving all users", req.user); // Log the user information from the request
   try {
     const result = await pool.query(`SELECT * FROM users`)
