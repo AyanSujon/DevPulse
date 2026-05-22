@@ -213,7 +213,7 @@ export const updateIssueById = async (req: Request, res: Response) => {
   const payload = req.body;
   const user = req.user;
 
-  console.log("request user form issue controller:", user);
+  // console.log("request user form issue controller:", user);
 
   try {
     // Get existing issue
@@ -221,7 +221,7 @@ export const updateIssueById = async (req: Request, res: Response) => {
       id as string
     );
 
-    console.log("Existing issue:", existingIssue);
+    // console.log("Existing issue:", existingIssue);
 
     // Check if issue exists
    if (!existingIssue) {
@@ -278,6 +278,49 @@ export const updateIssueById = async (req: Request, res: Response) => {
     });
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
