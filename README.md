@@ -52,9 +52,6 @@ DevPulse is designed to act as a lightweight issue tracking system for developme
 
 ---
 
-Here’s a clean **README.md section** for your **Tech Stack + Setup Steps**:
-
----
 
 ## ⚙️ Tech Stack
 
