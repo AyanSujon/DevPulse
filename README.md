@@ -6,7 +6,7 @@
 **Project Repository:** https://github.com/AyanSujon/DevPulse  
 **Developer:** Ayan Sujon  
 **Website:** https://www.ayansujon.com  
-**LinkedIn:** https://www.linkedin.com/in/ayan-sujon/
+**LinkedIn:** https://www.linkedin.com/in/ayansujon/
 
 
 ---
