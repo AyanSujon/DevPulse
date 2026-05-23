@@ -4,7 +4,6 @@
 **Developer:** Ayan Sujon  
 **Website:** https://www.ayansujon.com  
 **LinkedIn:** https://www.linkedin.com/in/ayansujon/
-
 ---
 
 ## Table of Contents
@@ -18,6 +17,24 @@
    - [Issue Endpoints](#issue-endpoints)
 4. [Error Handling](#error-handling)
 5. [Response Format](#response-format)
+
+---
+## 🚀 DevPulse Project Overview
+
+DevPulse is a RESTful backend API built for managing software issues in a collaborative development environment. It provides a structured system for reporting, tracking, updating, and resolving bugs and feature requests with role-based access control and secure authentication.
+
+## 🎯 Project Purpose
+
+DevPulse is designed to act as a lightweight issue tracking system for development teams. It allows contributors to report issues and maintainers to manage the full lifecycle of those issues, ensuring smooth collaboration between users and project maintainers.
+
+## 🏗️ Core Features
+
+### 🔐 Authentication & Security
+- JWT-based authentication system
+- Secure user registration and login
+- Role-based access control:
+  - **Contributor** → create and update own issues (limited access)
+  - **Maintainer** → full access (update & delete any issue)
 
 ---
 
@@ -729,6 +746,10 @@ curl -X DELETE http://localhost:3000/api/issues/1 \
   -H "Authorization: $TOKEN"
 ```
 
+
+## 🧠 Summary
+
+DevPulse is a secure, scalable issue tracking REST API that enables structured collaboration between developers and maintainers using JWT authentication, role-based permissions, and a clean modular architecture.
 ---
 
 ## Notes
