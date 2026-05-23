@@ -284,9 +284,37 @@ export const updateIssueById = async (req: Request, res: Response) => {
 
 
 
+// Delete issue by ID
+export const deleteIssueById = async (req: Request, res: Response) => {
+  const { id } = req.params;
 
+  try {
+    const deletedIssue = await issueService.deleteIssueByIdFromDB(id as string);
 
+    if (deletedIssue.rowCount === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Issue not found",
+        data: null,
+      });
+    }
 
+    return res.status(200).json({
+      success: true,
+      message: "Issue deleted successfully",
+      data: {},
+    });
+
+  } catch (error: any) {
+    console.error("Error deleting issue:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Internal Server Error",
+      data: null,
+    });
+  }
+};
 
 
 
@@ -332,4 +360,5 @@ export const issueController = {
     getAllIssues,
     getSingleIssueById, 
     updateIssueById,
+    deleteIssueById,
 }

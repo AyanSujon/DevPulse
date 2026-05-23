@@ -161,7 +161,7 @@ export const getSingleIssueByIdFromDB = async (issueId: string) => {
 
 
 
-
+// Update issue by ID
 export const updateIssueByIdFromDB = async (
   id: string,
   payload: IUpdateIssuePayload
@@ -187,6 +187,14 @@ export const updateIssueByIdFromDB = async (
 
 
 
+// Delete issue by ID
+export const deleteIssueByIdFromDB = async (id: string) => {
+  const result = await pool.query(
+    `DELETE FROM issues WHERE id = $1 RETURNING *`,
+    [id]
+  );
+  return result;
+}
 
 
 
@@ -209,12 +217,11 @@ export const updateIssueByIdFromDB = async (
 
 
 
-
-
-
+// Exporting all service functions together
 export const issueService ={
     createIssueIntoDB,
     getAllIssuesFromDB,
     getSingleIssueByIdFromDB,
     updateIssueByIdFromDB,
+    deleteIssueByIdFromDB,
 }

@@ -26,7 +26,7 @@ router.post('/', auth(userRole.contributor, userRole.maintainer), issueControlle
 router.get("/" , issueController.getAllIssues);
 router.get("/:id" , issueController.getSingleIssueById);
 router.patch("/:id",  auth(userRole.contributor, userRole.maintainer), issueController.updateIssueById);
-
+router.delete("/:id", auth( userRole.maintainer), issueController.deleteIssueById);
 
 
 
