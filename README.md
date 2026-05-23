@@ -52,6 +52,25 @@ DevPulse is designed to act as a lightweight issue tracking system for developme
 
 ---
 
+Here’s a clean **README.md section** for your **Tech Stack + Setup Steps**:
+
+---
+
+## ⚙️ Tech Stack
+
+* **Runtime:** Node.js
+* **Framework:** Express.js
+* **Language:** TypeScript
+* **Database:** PostgreSQL
+* **Authentication:** JSON Web Token (JWT)
+* **Password Security:** bcrypt
+* **Architecture:** Modular / Layered Architecture (Controller–Service–Route)
+* **Deployment:** Vercel (Serverless Functions)
+
+---
+
+
+
 ## Authentication
 
 ### JWT Token-Based Authentication
@@ -750,6 +769,71 @@ curl -X PATCH http://localhost:3000/api/issues/1 \
 curl -X DELETE http://localhost:3000/api/issues/1 \
   -H "Authorization: $TOKEN"
 ```
+
+
+
+## 🚀 Setup Steps
+
+### 1️⃣ Clone the repository
+
+```bash
+git clone https://github.com/AyanSujon/DevPulse.git
+cd DevPulse
+```
+
+---
+
+### 2️⃣ Install dependencies
+
+```bash
+npm install
+```
+
+---
+
+### 3️⃣ Create environment variables
+
+Create a `.env` file in the root directory:
+
+```env
+PORT=3000
+DATABASE_URL=your_database_url
+JWT_SECRET=your_secret_key
+CORS_ORIGIN=*
+```
+
+---
+
+### 4️⃣ Run the project in development mode
+
+```bash
+npm run dev
+```
+
+---
+
+### 5️⃣ Build the project
+
+```bash
+npm run build
+```
+
+---
+
+### 6️⃣ Start production server
+
+```bash
+npm start
+```
+
+---
+
+## 🌐 Base URL (Live API)
+
+```
+https://devpulse-api-delta.vercel.app
+```
+
 
 
 ## 🧠 Summary
