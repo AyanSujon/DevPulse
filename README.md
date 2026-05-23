@@ -61,7 +61,7 @@ Here’s a clean **README.md section** for your **Tech Stack + Setup Steps**:
 * **Runtime:** Node.js
 * **Framework:** Express.js
 * **Language:** TypeScript
-* **Database:** PostgreSQL
+* **Database:** PostgreSQL, NeonDB
 * **Authentication:** JSON Web Token (JWT)
 * **Password Security:** bcrypt
 * **Architecture:** Modular / Layered Architecture (Controller–Service–Route)
