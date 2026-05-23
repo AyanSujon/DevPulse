@@ -6,12 +6,20 @@ import { authRoute } from "./modules/auth/auth.route";
 import auth from "./middleware/auth";
 import { issueRoute } from "./modules/issue/issue.route";
 import { userRole } from "./types";
+import cors from "cors";
+import config from "./config";
 
 const app: Application = express()
 
+const corsOptions = {
+  origin: config.corsOrigin,
+}
 
 
 app.use(express.json());
+app.use(cors(corsOptions));
+
+
 
 
 // Post endpoint to create a new user
