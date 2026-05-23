@@ -751,6 +751,7 @@ curl -X DELETE http://localhost:3000/api/issues/1 \
 ## 🧠 Summary
 
 DevPulse is a secure, scalable issue tracking REST API that enables structured collaboration between developers and maintainers using JWT authentication, role-based permissions, and a clean modular architecture.
+
 ---
 
 ## Notes
