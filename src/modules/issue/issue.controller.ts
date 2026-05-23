@@ -1,6 +1,7 @@
 
 import type { Request, Response } from "express";
 import { getAllIssuesFromDB, getSingleIssueByIdFromDB, issueService, updateIssueByIdFromDB } from "./issue.service";
+import sendResponse from "../../utils/sendResponse";
 
 // create issues
 const createIssue = async (req: Request, res: Response) => {
@@ -9,10 +10,11 @@ const createIssue = async (req: Request, res: Response) => {
     // console.log("request user form issue controller:", req.user);
     // ✅ check if reporter_id exists
     if (!reporter_id) {
-      return res.status(401).json({
+      sendResponse(res, {
+        statusCode: 401,
         success: false,
         message: "Unauthorized: reporter_id not found",
-        data: null,
+        data: null
       });
     }
 
@@ -25,13 +27,15 @@ const createIssue = async (req: Request, res: Response) => {
 // console.log("Creating issue with payload:", payload);
     const result = await issueService.createIssueIntoDB(payload);
 
-    return res.status(201).json({
+    sendResponse(res, {
+      statusCode: 201,
       success: true,
       message: "Issue created successfully",
       data: result.rows[0],
     });
   } catch (error: any) {
-    return res.status(500).json({
+    sendResponse(res, {
+      statusCode: 500,
       success: false,
       message: error.message,
       data: null,
@@ -47,16 +51,23 @@ export const getAllIssues = async (req: Request, res: Response) => {
   try {
     const data = await getAllIssuesFromDB(req.query);
 
-    return res.status(200).json({
+    // return res.status(200).json({
+    //   success: true,
+    //   data,
+    // });
+    sendResponse(res, {
+      statusCode: 200,
       success: true,
-      data,
+      message: "Issues fetched successfully",
+      data: data
     });
   } catch (error) {
     console.error("Get all issues error:", error);
-
-    return res.status(500).json({
+    sendResponse(res, {
+      statusCode: 500,
       success: false,
       message: "Failed to fetch issues",
+      data: null
     });
   }
 };
@@ -72,21 +83,25 @@ export const getSingleIssueById = async (req: Request, res: Response) => {
     const result = await issueService.getSingleIssueByIdFromDB(issueId as string);
 
     if (!result) {
-      return res.status(404).json({
+      return sendResponse(res, {
+        statusCode: 404,
         success: false,
         message: "Issue not found",
         data: null,
       });
     }
 
-    return res.status(200).json({
-      success: true,
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true, 
       message: "Issue retrieved successfully",
       data: result,
     });
 
   } catch (error: any) {
-    return res.status(500).json({
+    sendResponse(res, {
+      statusCode: 500,
       success: false,
       message: error.message,
       data: null,
@@ -115,8 +130,14 @@ export const updateIssueById = async (req: Request, res: Response) => {
 
     // Check if issue exists
    if (!existingIssue) {
-  return res.status(404).json({
-    success: false,
+  // return res.status(404).json({
+  //   success: false,
+  //   message: "Issue not found",
+  //   data: null,
+  // });
+  return sendResponse(res, {
+    statusCode: 404,
+    success: false, 
     message: "Issue not found",
     data: null,
   });
@@ -131,15 +152,22 @@ export const updateIssueById = async (req: Request, res: Response) => {
       const isOpen = existingIssue.status === "open";
 
       if (!isOwner || !isOpen) {
-        return res.status(403).json({
+        return sendResponse(res, {
+          statusCode: 403,
           success: false,
           message: "Contributors can only update their own open issues",
           data: null,
         });
       }
     } else {
-      return res.status(403).json({
-        success: false,
+      // return res.status(403).json({
+      //   success: false,
+      //   message: "Unauthorized access",
+      //   data: null,
+      // });
+      return sendResponse(res, {
+        statusCode: 403,
+        success: false, 
         message: "Unauthorized access",
         data: null,
       });
@@ -153,7 +181,8 @@ export const updateIssueById = async (req: Request, res: Response) => {
 
     // console.log("Updated issue:", updatedIssue.rows[0]);
 
-    return res.status(200).json({
+    return sendResponse(res, {
+      statusCode: 200,
       success: true,
       message: "Issue updated successfully",
       data: updatedIssue.rows[0],
@@ -161,7 +190,8 @@ export const updateIssueById = async (req: Request, res: Response) => {
   } catch (error: any) {
     console.error("Error updating issue:", error);
 
-    return res.status(500).json({
+    return sendResponse(res, {
+      statusCode: 500,
       success: false,
       message: error.message || "Internal Server Error",
       data: null,
@@ -182,23 +212,25 @@ export const deleteIssueById = async (req: Request, res: Response) => {
     const deletedIssue = await issueService.deleteIssueByIdFromDB(id as string);
 
     if (deletedIssue.rowCount === 0) {
-      return res.status(404).json({
+      return sendResponse(res, {
+        statusCode: 404,
         success: false,
         message: "Issue not found",
         data: null,
       });
     }
 
-    return res.status(200).json({
-      success: true,
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,  
       message: "Issue deleted successfully",
       data: {},
     });
-
   } catch (error: any) {
     console.error("Error deleting issue:", error);
 
-    return res.status(500).json({
+    return sendResponse(res, {
+      statusCode: 500,
       success: false,
       message: error.message || "Internal Server Error",
       data: null,
