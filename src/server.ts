@@ -7,7 +7,7 @@ const main=()=>{
   initDB();
   initIssuesDB();
   app.listen(config.port, () => {
-  console.log(`Example app listening on port ${config.port}`)
+  console.log(`DevPulse app listening on port ${config.port}`)
 })
 
 }

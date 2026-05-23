@@ -1,32 +1,3 @@
-// import { pool } from "../../db"
-// import type { IIssue } from "./issue.interface";
-
-
-
-// const createIssueIntoDB = async(payload : IIssue ) =>{
-//         console.log("Creating issue with payload:", payload);
-        
-//         const {title, description, type, reporter_id} = payload;
-
-//     const result = await pool.query(
-//       `INSERT INTO issues (title, description, type, reporter_id) VALUES ($1, $2, $3, $4) RETURNING *`,
-//       [title, description, type, reporter_id]
-//     )
-//     return result;
-// }
-
-// export const issueService ={
-//     createIssueIntoDB,
-
-// }
-
-
-
-
-
-
-
-
 
 
 import { pool } from "../../db"
@@ -195,21 +166,6 @@ export const deleteIssueByIdFromDB = async (id: string) => {
   );
   return result;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
