@@ -1,11 +1,13 @@
 # DevPulse API Documentation
 
-**Version:** 1.0.0
-**Base API:** https://devpulse-api-delta.vercel.app
-**Project Repo:** https://github.com/AyanSujon/DevPulse.git
+
+**Version:** 1.0.0  
+**Base API:** https://devpulse-api-delta.vercel.app  
+**Project Repository:** https://github.com/AyanSujon/DevPulse  
 **Developer:** Ayan Sujon  
 **Website:** https://www.ayansujon.com  
-**LinkedIn:** https://www.linkedin.com/in/ayansujon/
+**LinkedIn:** https://www.linkedin.com/in/ayan-sujon/
+
 
 ---
 
